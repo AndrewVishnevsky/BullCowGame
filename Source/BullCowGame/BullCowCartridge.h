@@ -15,6 +15,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void OnInput(const FString& Input) override;
 	void InitGame();
+	void EndGame();
 
 	// Your declarations go below!
 private:
@@ -24,5 +25,6 @@ private:
 protected:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly)
 	int32 Lives;
+	bool bGameOver;
 	
 };

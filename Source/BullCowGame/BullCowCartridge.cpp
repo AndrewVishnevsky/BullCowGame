@@ -5,37 +5,51 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
 
-	PrintLine(TEXT("Look at you hacker..."));
-	PrintLine(TEXT("Do you know my name, insect?"));
-
     InitGame();
+
+    //PrintLine(FString::Printf(TEXT("The HiddenWord is: %s.\nIt is %i characters long"), *HiddenWord,HiddenWord.Len()));
+
+
+
 
     //set lives
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
-    ClearScreen();
-   
     
-
-    FString Guess=(Input);
-    if (Guess == HiddenWord )
+   
+    if (bGameOver)
     {
-        PrintLine(TEXT("Correct, insect"));
+        ClearScreen();
+        InitGame();
     }
     else
     {
-        if (HiddenWord.Len() == Guess.Len())
-        {
-            PrintLine(TEXT("So close...but.."));
-        }
-        else 
-        {
-            PrintLine(TEXT("HOW DARE YOU!"));
-        }
-        PrintLine(TEXT("Welcome to my mutant family!"));              
+		FString Guess = (Input);
+		if (Guess == HiddenWord)
+		{
+			PrintLine(TEXT("Correct, insect"));
+			EndGame();
+		}
+		else
+		{
+			if (HiddenWord.Len() == Guess.Len())
+			{
+				PrintLine(TEXT("So close...but.."));
+			}
+			else
+			{
+				PrintLine(TEXT("HOW DARE YOU!"));
+			}
+			PrintLine(TEXT("Welcome to my mutant family!"));
+			EndGame();
+		}
     }
+
+
+
+    
 
     //check if isogram
     //check number of characters
@@ -54,7 +68,19 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 
 void UBullCowCartridge::InitGame()
 {
+	PrintLine(TEXT("Look at you hacker..."));
+	bGameOver = false;
 	HiddenWord = TEXT("SHODAN");
-    Lives = 5;
+	Lives = 5;
 
+	PrintLine(TEXT("Do you know my name, insect? prompt..%i letter name "), HiddenWord.Len());
+	PrintLine(TEXT("Answer me! "));
+
+
+}
+
+void UBullCowCartridge::EndGame()
+{
+	bGameOver = true;
+	PrintLine(TEXT("Press Enter to Play Again."));
 }
